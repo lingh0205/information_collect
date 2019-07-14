@@ -8,7 +8,7 @@ logging:
   path: logs/
   file: collect.log
   level:
-    root: debug
+    root: info
 
 spring:
   datasource:
