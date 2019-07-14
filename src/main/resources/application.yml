@@ -4,6 +4,12 @@ server:
 environment:
   cpu: 2
 
+logging:
+  path: logs/
+  file: collect.log
+  level:
+    root: debug
+
 spring:
   datasource:
     name: collect_information
