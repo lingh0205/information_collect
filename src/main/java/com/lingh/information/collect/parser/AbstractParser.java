@@ -10,8 +10,6 @@ import com.lingh.information.collect.dao.entity.Content;
 import com.lingh.information.collect.dao.entity.Resource;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.seimicrawler.xpath.JXNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.annotation.PostConstruct;

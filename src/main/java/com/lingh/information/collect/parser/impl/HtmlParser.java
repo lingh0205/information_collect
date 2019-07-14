@@ -73,17 +73,23 @@ public class HtmlParser extends AbstractParser {
             return Boolean.FALSE;
         }
 
+        String value = findValue(node, template, resource, fieldName, item, jxn);
+        return setAndLogField(traceId, content, fieldName, value);
+    }
+
+    private String findValue(JXNode node, Resource.Template template, Resource resource, String fieldName, Resource.Item item, JXNode jxn) {
         String value = "";
         if (item.useAttr()){
             value = getAttr(node, template, item.getAttr(), fieldName);
-            if (checkHttp(value)){
-                value = resource.getLink() + value;
-            }
         }else{
             value = jxn.asElement().text();
         }
+
+        if (checkHttp(value)){
+            value = resource.getLink() + value;
+        }
         value = parseWithPattern(item, value);
-        return setAndLogField(traceId, content, fieldName, value);
+        return value;
     }
 
     protected String getAttr(JXNode node, Resource.Template template, String attrName, String fieldName){
