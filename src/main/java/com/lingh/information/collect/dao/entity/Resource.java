@@ -152,6 +152,28 @@ public class Resource implements Serializable {
 
         private String tag;
         private String attr;
+        private String pattern;
+        private Integer group;
+
+        public Integer getGroup() {
+            return group;
+        }
+
+        public void setGroup(Integer group) {
+            this.group = group;
+        }
+
+        public boolean usePattern(){
+            return StrUtil.isNotBlank(this.getPattern());
+        }
+
+        public String getPattern() {
+            return pattern;
+        }
+
+        public void setPattern(String pattern) {
+            this.pattern = pattern;
+        }
 
         public boolean useAttr(){
             return StrUtil.isNotBlank(attr);

@@ -111,11 +111,13 @@ public class XmlParser extends AbstractParser {
         Elements desElemList = elem.getElementsByTag(tagName);
         if (CollectionUtil.isNotEmpty(desElemList)){
             for (Element element : desElemList) {
+                String value = "";
                 if (item.useAttr()){
-                    list.add(element.attr(item.getAttr()));
+                    value = element.attr(item.getAttr());
                 }else {
-                    list.add(element.text());
+                    value = element.text();
                 }
+                list.add(parseWithPattern(item, value));
                 if (!isAll){
                     break;
                 }

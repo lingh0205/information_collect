@@ -17,6 +17,8 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Component
 public class HtmlParser extends AbstractParser {
@@ -80,7 +82,7 @@ public class HtmlParser extends AbstractParser {
         }else{
             value = jxn.asElement().text();
         }
-
+        value = parseWithPattern(item, value);
         return setAndLogField(traceId, content, fieldName, value);
     }
 

@@ -71,6 +71,17 @@ public abstract class AbstractParser implements Parser {
         return false;
     }
 
+    protected String parseWithPattern(Resource.Item item, String value) {
+        if(item.usePattern()){
+            Pattern pattern = Pattern.compile(item.getPattern());
+            Matcher matcher = pattern.matcher(value);
+            if (matcher.find()){
+                value = matcher.group(item.getGroup());
+            }
+        }
+        return value;
+    }
+
     protected boolean checkHttp(String url) {
         if (StrUtil.isEmpty(url) || StrUtil.equalsIgnoreCase("--", url)) {
             return false;
