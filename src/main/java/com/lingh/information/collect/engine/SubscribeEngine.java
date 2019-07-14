@@ -31,7 +31,7 @@ public class SubscribeEngine {
     private static final Logger LOGGER = LoggerFactory.getLogger(SubscribeEngine.class);
 
     Cache<String, String> TASK_CACHE = CacheBuilder.newBuilder()
-            .expireAfterAccess(10, TimeUnit.MINUTES)
+            .expireAfterWrite(10, TimeUnit.MINUTES)
             .maximumSize(Integer.MAX_VALUE)
             .build();
 
