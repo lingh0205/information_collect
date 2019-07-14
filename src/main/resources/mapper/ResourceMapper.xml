@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lingh.information.collect.dao.mapping.ResourceMapper" >
+
+  <resultMap id="BaseResultMap" type="com.lingh.information.collect.dao.entity.Resource" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+    <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="link" property="link" jdbcType="VARCHAR" />
+    <result column="parser" property="parser" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="template" property="template" jdbcType="VARCHAR" />
+    <result column="period" property="period" jdbcType="BIGINT" />
+    <result column="next_execute_time" property="lastExecuteTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, gmt_create, gmt_modified, url, link, parser, description, template, period, next_execute_time, status
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from resource
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByUrl" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from resource
+    where url = #{url,jdbcType=VARCHAR}
+  </select>
+
+  <select id="queryActiveResource" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    <![CDATA[
+      from resource
+      where
+      next_execute_time <=
+    ]]>
+    #{date,jdbcType=TIMESTAMP}
+    and
+      status = 1
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from resource
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insert" parameterType="com.lingh.information.collect.dao.entity.Resource" >
+    insert into resource (id, gmt_create, gmt_modified, 
+      url, link, parser, description, template, period, next_execute_time,
+      status)
+    values (#{id,jdbcType=BIGINT}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, 
+      #{url,jdbcType=VARCHAR}, #{link,jdbcType=VARCHAR}, #{parser,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{template,jdbcType=VARCHAR}
+      , #{period,jdbcType=BIGINT}, #{lastExecuteTime,jdbcType=TIMESTAMP}, #{status,jdbcType=TINYINT})
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.lingh.information.collect.dao.entity.Resource" >
+    insert into resource
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create,
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="link != null" >
+        link,
+      </if>
+      <if test="parser != null" >
+        parser,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="template != null" >
+        template,
+      </if>
+      <if test="period != null" >
+        period,
+      </if>
+      <if test="lastExecuteTime != null" >
+        next_execute_time,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="gmtCreate != null" >
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="link != null" >
+        #{link,jdbcType=VARCHAR},
+      </if>
+      <if test="parser != null" >
+        #{parser,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="template != null" >
+        #{template,jdbcType=VARCHAR},
+      </if>
+      <if test="period != null" >
+        #{period,jdbcType=BIGINT},
+      </if>
+      <if test="lastExecuteTime != null" >
+        #{lastExecuteTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.lingh.information.collect.dao.entity.Resource" >
+    update resource
+    <set >
+      <if test="gmtCreate != null" >
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="link != null" >
+        link = #{link,jdbcType=VARCHAR},
+      </if>
+      <if test="parser != null" >
+        parser = #{parser,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="template != null" >
+        template = #{template,jdbcType=VARCHAR},
+      </if>
+      <if test="period != null" >
+        period = #{period,jdbcType=BIGINT},
+      </if>
+      <if test="lastExecuteTime != null" >
+        next_execute_time = #{lastExecuteTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="com.lingh.information.collect.dao.entity.Resource" >
+    update resource
+    set gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      url = #{url,jdbcType=VARCHAR},
+      link = #{link,jdbcType=VARCHAR},
+      parser = #{parser,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      template = #{template,jdbcType=VARCHAR},
+      period = #{period,jdbcType=BIGINT},
+      next_execute_time = #{lastExecuteTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

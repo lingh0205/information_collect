@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lingh.information.collect.dao.mapping.AccountResourceSubscribeMapper" >
+
+  <resultMap id="BaseResultMap" type="com.lingh.information.collect.dao.entity.AccountResourceSubscribe" >
+    <result column="account_id" property="accountId" jdbcType="BIGINT" />
+    <result column="resource_id" property="resourceId" jdbcType="BIGINT" />
+    <result column="last_subscribe_time" property="lastSubscribeTime" jdbcType="BIGINT" />
+  </resultMap>
+
+  <select id="querySubscribeResources" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select * from account_resource_subscribe where account_id = #{accountId,jdbcType=BIGINT}
+  </select>
+
+  <insert id="insert" parameterType="com.lingh.information.collect.dao.entity.AccountResourceSubscribe" >
+    insert into account_resource_subscribe (account_id, resource_id, last_subscribe_time)
+    values (#{accountId,jdbcType=BIGINT}, #{resourceId,jdbcType=BIGINT}, #{lastSubscribeTime,jdbcType=TIMESTAMP})
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.lingh.information.collect.dao.entity.AccountResourceSubscribe" >
+    insert into account_resource_subscribe
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="accountId != null" >
+        account_id,
+      </if>
+      <if test="resourceId != null" >
+        resource_id,
+      </if>
+      <if test="lastSubscribeTime != null" >
+        last_subscribe_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="accountId != null" >
+        #{accountId,jdbcType=BIGINT},
+      </if>
+      <if test="resourceId != null" >
+        #{resourceId,jdbcType=BIGINT},
+      </if>
+      <if test="lastSubscribeTime != null" >
+        #{lastSubscribeTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByAccountAndResource" parameterType="com.lingh.information.collect.dao.entity.Account" >
+    update account_resource_subscribe
+    <set >
+      <if test="lastSubscribeTime != null" >
+        last_subscribe_time = #{lastSubscribeTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where account_id = #{accountId,jdbcType=BIGINT}
+    and
+    resource_id = #{resourceId,jdbcType=BIGINT}
+  </update>
+
+</mapper>

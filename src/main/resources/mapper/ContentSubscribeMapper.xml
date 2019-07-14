@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lingh.information.collect.dao.mapping.ContentSubscribeMapper" >
+
+  <resultMap id="BaseResultMap" type="com.lingh.information.collect.dao.entity.ContentSubscribe" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+    <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
+    <result column="account_id" property="accountId" jdbcType="BIGINT" />
+    <result column="resource_id" property="resourceId" jdbcType="BIGINT" />
+    <result column="content_id" property="contentId" jdbcType="BIGINT" />
+    <result column="content_title" property="contentTitle" jdbcType="VARCHAR" />
+    <result column="last_subscribe_time" property="lastSubscribeTime" jdbcType="TIMESTAMP" />
+    <result column="send_status" property="sendStatus" jdbcType="TINYINT" />
+    <result column="retry_time" property="retryTime" jdbcType="TINYINT" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, gmt_create, gmt_modified, account_id, resource_id, content_id, content_title,
+    last_subscribe_time, send_status, retry_time
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from content_subscribe
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryRetry" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from content_subscribe
+    where account_id = #{accountId,jdbcType=BIGINT}
+    and
+    resource_id = #{resourceId,jdbcType=BIGINT}
+    <![CDATA[
+      and send_status = 0
+      and retry_time < 3
+    ]]>
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from content_subscribe
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insert" parameterType="com.lingh.information.collect.dao.entity.ContentSubscribe" >
+    insert into content_subscribe (id, gmt_create, gmt_modified, 
+      account_id, resource_id, content_id,
+      content_title, last_subscribe_time, send_status, 
+      retry_time)
+    values (#{id,jdbcType=BIGINT}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, 
+      #{accountId,jdbcType=BIGINT}, #{resourceId,jdbcType=BIGINT}, #{contentId,jdbcType=BIGINT},
+      #{contentTitle,jdbcType=VARCHAR}, #{lastSubscribeTime,jdbcType=TIMESTAMP}, #{sendStatus,jdbcType=TINYINT}, 
+      #{retryTime,jdbcType=TINYINT})
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.lingh.information.collect.dao.entity.ContentSubscribe" >
+    insert into content_subscribe
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create,
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified,
+      </if>
+      <if test="accountId != null" >
+        account_id,
+      </if>
+      <if test="resourceId != null" >
+        reource_id,
+      </if>
+      <if test="contentId != null" >
+        content_id,
+      </if>
+      <if test="contentTitle != null" >
+        content_title,
+      </if>
+      <if test="lastSubscribeTime != null" >
+        last_subscribe_time,
+      </if>
+      <if test="sendStatus != null" >
+        send_status,
+      </if>
+      <if test="retryTime != null" >
+        retry_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="gmtCreate != null" >
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="accountId != null" >
+        #{accountId,jdbcType=BIGINT},
+      </if>
+      <if test="resourceId != null" >
+        #{reourceId,jdbcType=BIGINT},
+      </if>
+      <if test="contentId != null" >
+        #{contentId,jdbcType=BIGINT},
+      </if>
+      <if test="contentTitle != null" >
+        #{contentTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="lastSubscribeTime != null" >
+        #{lastSubscribeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sendStatus != null" >
+        #{sendStatus,jdbcType=TINYINT},
+      </if>
+      <if test="retryTime != null" >
+        #{retryTime,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.lingh.information.collect.dao.entity.ContentSubscribe" >
+    update content_subscribe
+    <set >
+      <if test="gmtCreate != null" >
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="accountId != null" >
+        account_id = #{accountId,jdbcType=BIGINT},
+      </if>
+      <if test="resourceId != null" >
+        reource_id = #{reourceId,jdbcType=BIGINT},
+      </if>
+      <if test="contentId != null" >
+        content_id = #{contentId,jdbcType=BIGINT},
+      </if>
+      <if test="contentTitle != null" >
+        content_title = #{contentTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="lastSubscribeTime != null" >
+        last_subscribe_time = #{lastSubscribeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sendStatus != null" >
+        send_status = #{sendStatus,jdbcType=TINYINT},
+      </if>
+      <if test="retryTime != null" >
+        retry_time = #{retryTime,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="com.lingh.information.collect.dao.entity.ContentSubscribe" >
+    update content_subscribe
+    set gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      account_id = #{accountId,jdbcType=BIGINT},
+      resource_id = #{resourceId,jdbcType=BIGINT},
+      content_id = #{contentId,jdbcType=BIGINT},
+      content_title = #{contentTitle,jdbcType=VARCHAR},
+      last_subscribe_time = #{lastSubscribeTime,jdbcType=TIMESTAMP},
+      send_status = #{sendStatus,jdbcType=TINYINT},
+      retry_time = #{retryTime,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateSuccessStatus" >
+    update content_subscribe
+    set
+      send_status = 1
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateRetry" >
+    update content_subscribe
+    set
+      retry_time = retry_time + 1
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>
