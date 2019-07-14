@@ -72,7 +72,7 @@
         account_id,
       </if>
       <if test="resourceId != null" >
-        reource_id,
+        resource_id,
       </if>
       <if test="contentId != null" >
         content_id,
@@ -104,7 +104,7 @@
         #{accountId,jdbcType=BIGINT},
       </if>
       <if test="resourceId != null" >
-        #{reourceId,jdbcType=BIGINT},
+        #{resourceId,jdbcType=BIGINT},
       </if>
       <if test="contentId != null" >
         #{contentId,jdbcType=BIGINT},
@@ -137,7 +137,7 @@
         account_id = #{accountId,jdbcType=BIGINT},
       </if>
       <if test="resourceId != null" >
-        reource_id = #{reourceId,jdbcType=BIGINT},
+        resource_id = #{resourceId,jdbcType=BIGINT},
       </if>
       <if test="contentId != null" >
         content_id = #{contentId,jdbcType=BIGINT},
