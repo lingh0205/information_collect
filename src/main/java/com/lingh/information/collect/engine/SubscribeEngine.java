@@ -208,6 +208,7 @@ public class SubscribeEngine {
                 try{
                     if (future.isDone()) {
                         Boolean success = future.get();
+                        LOGGER.info("Finished Task {}, Result is [{}].", resource.getUrl(), success);
                         if (success) {
                             resourceService.updateNextExecTime(resource);
                             return;
